@@ -1,11 +1,3 @@
-\eDellPrograms\Archive_FTs
-
-IphoneAKSTeam/
-
-Digital Services\Assisted Support\Services Case & Account Management\Assisted Support Case Management
-
-
-
 apiVersion : apps/v1
 kind: Deployment
 metadata:
