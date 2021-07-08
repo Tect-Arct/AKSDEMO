@@ -18,7 +18,7 @@ variables:
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
-Task-1: Build this task also from scratch
+# Task-1: Build this task also from scratch
 stages:
 - stage: Build
   displayName: Build and push stage
@@ -38,18 +38,23 @@ stages:
         tags: |
           $(tag)
 
-# Task-2: Copy files (Copy files from a source folder to target folder)
-
+## Publish Artifacts pipeline code in addition to Build and Push          
+    - bash: echo Contents in System Default Working Directory; ls -R $(System.DefaultWorkingDirectory)        
+    - bash: echo Before copying Contents in Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory)        
+    # Task-2: Copy files (Copy files from a source folder to target folder)
+    # Source Directory: $(System.DefaultWorkingDirectory)/kube-manifests
+    # Target Directory: $(Build.ArtifactStagingDirectory)
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)/kube-manifests'
         Contents: '**'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
         OverWrite: true
-        CleanTargetFolder: 
-# Task-3: Publish Artifacts to Azure Pipelines
+    # List files from Build Artifact Staging Directory - After Copy
+    - bash: echo After copying to Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory) 
+    # Task-3: Publish build artifacts (Publish build to Azure Pipelines)           
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+        ArtifactName: 'kube-manifests'
+        publishLocation: 'Container'  
