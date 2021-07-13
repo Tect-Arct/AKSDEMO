@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: '30ca1d59-e635-48f0-a9a4-b5be741e3949'
   imageRepository: 'app1nginx'
   containerRegistry: 'acrdevops18.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  dockerfilePath: 'https://github.com/Tect-Arct/AKSDEMO/blob/main/Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
